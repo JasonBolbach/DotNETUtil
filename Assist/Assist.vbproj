@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>Assist</RootNamespace>
+    <AssemblyName>Assist</AssemblyName>
+    <MyType>Empty</MyType>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionStrict>Off</OptionStrict>
+    <OptionInfer>On</OptionInfer>
+    <NoWarn>$(NoWarn);42016;41999;42017;42018;42019;42032;42036;42020;42021;42022</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Import Include="System.Data" />
+  </ItemGroup>
+
+  <!-- Keep the assembly attributes; drop the .NET Framework designer-generated My Project files -->
+  <ItemGroup>
+    <Compile Remove="My Project\**" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <EmbeddedResource Remove="My Project\**" />
+    <None Remove="My Project\**" />
+  </ItemGroup>
+
+  <!-- WinForms / System.Drawing helpers need a Windows-specific target, so they are not compiled here.
+       The files are still on disk. -->
+  <ItemGroup>
+    <Compile Remove="DataGridView\**;Demo\**;Drawing\**;Invoke\**" />
+    <EmbeddedResource Remove="DataGridView\**;Demo\**;Drawing\**;Invoke\**" />
+    <None Remove="DataGridView\**;Demo\**;Drawing\**;Invoke\**" />
+    <Content Remove="DataGridView\**;Demo\**;Drawing\**;Invoke\**" />
+  </ItemGroup>
+
+</Project>
