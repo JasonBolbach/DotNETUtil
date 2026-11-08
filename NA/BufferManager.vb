@@ -19,7 +19,7 @@
     End Class
 
     Private pBuffer() As Byte
-    Private pBufferPool As SyncdStack
+    Private pBufferPool As SyncdStack(Of Integer)
     Private pBufferList As ArrayList
 
     Private pBufferSize As Integer
@@ -45,7 +45,7 @@
         pNumBuffers = NumBuffers : pBufferSize = BufferSize
 
         ReDim pBuffer((NumBuffers * BufferSize) - 1)
-        pBufferPool = New SyncdStack
+        pBufferPool = New SyncdStack(Of Integer)
         pBufferList = New ArrayList
 
         pBufferPool.Clear() : pBufferList.Clear()
@@ -57,15 +57,13 @@
     End Sub
 
     Public Function GetBuffer() As Buffer
-        If pBufferPool.Count <= 0 Then Return Nothing
-        Dim Offset As Integer = pBufferPool.Pop
-        Dim B As New Buffer(pBuffer, Offset, pBufferSize, Me)
-        Return B
+        Dim Offset As Integer
+        If Not pBufferPool.TryPop(Offset) Then Return Nothing
+        Return New Buffer(pBuffer, Offset, pBufferSize, Me)
     End Function
     Public Sub ReleaseBuffer(B As Buffer)
-        If Not pBufferPool.Contains(B.Offset) Then
-            pBufferPool.Push(B.Offset)
-        End If
+        'Releasing the same buffer twice must not put it in the pool twice
+        pBufferPool.PushIfAbsent(B.Offset)
     End Sub
 
     Public Sub New()
