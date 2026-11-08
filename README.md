@@ -1,4 +1,4 @@
-﻿# DotNETUtil
+# DotNETUtil
 
 Small .NET utility libraries (VB.NET, `net10.0`).
 
@@ -20,3 +20,7 @@ Small .NET utility libraries (VB.NET, `net10.0`).
 ```
 dotnet build DotNETUtil.sln
 ```
+
+## License
+
+MIT - see [LICENSE](LICENSE).
